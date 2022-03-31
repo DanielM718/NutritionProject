@@ -1,6 +1,13 @@
 #test to make sure Joseph N has connected to repository
-from flask import Flask, render_template
+from flask import Flask
+from flask import render_template
+from flask import request
+
+
 app = Flask(__name__)
+@app.route('/')
+def start():
+    return "Welcome to our project"
 
 @app.route('/about')
 def about():
