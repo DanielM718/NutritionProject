@@ -10,40 +10,60 @@ from firebase_admin import credentials, firestore
 
 
 
-cred = credentials.Certificate('/home/pi/Desktop/nutrition-backend/static/data')
+cred = credentials.Certificate('nutrition-app-ba2a6-firebase-adminsdk-419j0-8a54f8eead.json')
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 
 
 
+class sign_up:
+    def ___init__(self,email, username, password):
+        self.email = email
+        self.username = username
+        self.password = password
 
+        
 
-config={
-    "apiKey": "AIzaSyABd1dfgnJlVAX6fmjH2N_wxXNuM30CFko",
-  "authDomain": "nutrition-app-ba2a6.firebaseapp.com",
-  "projectId": "nutrition-app-ba2a6",
-  "storageBucket": "nutrition-app-ba2a6.appspot.com",
-  "messagingSenderId": "738081012918",
-  "appId": "1:738081012918:web:2010dcf255f4eb9bed3a17",
-  "measurementId": "G-8345LGWE3T"
-}
-
+        signUp = sign_up(email,username,password)
 
 
 app = Flask(__name__)
 
-CORS(app)
+CORS(app, resources=r'/api/*')
 
-@app.route('/sign-Up')
+@app.route('/')
 def main():
 
     return render_template('index.html')
 
-@app.route('/api/user_login', method=["GET"])
-def get():
-    username = db.collection('user_info')
-    user= username.document("lgjRVl3YSppicOUbjZNd").get()
+@app.route('/api/sign_up_page', methods=['GET','POST'])
+def sign_up_page():
+    username = db.collection('user_info')#access user_info collection
+    user = username.document("lgjRVl3YSppicOUbjZNd").get()#gets username
+    eml = request.form['email']
+    user_n=request.form['username']
+    passwrd=request.form['password']
+    #login_username= request.form['']
+    #login_password= request.form['']
+    info_list={'email':eml,
+                'username':user_n,
+                'password': passwrd
 
+    }
+
+    #if sign_up.email == eml and sign_up.username == user_n and sign_up.password == passwrd:
+    return render_template('list.html', eml=eml,user_n=user_n, passwrd =passwrd, info_list=info_list)
+
+
+    
+    #return render_template('index.html', username=username, user=user)
+
+
+@app.route('/api/login', methods=['GET','POST'])
+def login():
+    if signUp.username == request.form['username'] and signUp.password == request.form['password']:
+        return render_template('login.html')
+    
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
