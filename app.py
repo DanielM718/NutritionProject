@@ -16,15 +16,15 @@ db = firestore.client()
 
 
 
-class sign_up:
+class Sign_up:
     def ___init__(self,email, username, password):
         self.email = email
         self.username = username
         self.password = password
 
-        
+        #initilize all parameters
 
-        signUp = sign_up(email,username,password)
+        
 
 
 app = Flask(__name__)
@@ -38,21 +38,26 @@ def main():
 
 @app.route('/api/sign_up_page', methods=['GET','POST'])
 def sign_up_page():
-    username = db.collection('user_info')#access user_info collection
-    user = username.document("lgjRVl3YSppicOUbjZNd").get()#gets username
     eml = request.form['email']
     user_n=request.form['username']
     passwrd=request.form['password']
-    #login_username= request.form['']
-    #login_password= request.form['']
-    info_list={'email':eml,
+    #request info from form
+
+    def user_dict():
+        return {'email':eml,
                 'username':user_n,
                 'password': passwrd
 
     }
+    username = db.collection('user_info')#access user_info collection
+    user = username.document(user_n).set(user_dict())#gets username
+    
+    #login_username= request.form['']
+    #login_password= request.form['']
+    
 
     #if sign_up.email == eml and sign_up.username == user_n and sign_up.password == passwrd:
-    return render_template('list.html', eml=eml,user_n=user_n, passwrd =passwrd, info_list=info_list)
+    return render_template('list.html', eml=eml,user_n=user_n, passwrd =passwrd)
 
 
     
@@ -61,7 +66,7 @@ def sign_up_page():
 
 @app.route('/api/login', methods=['GET','POST'])
 def login():
-    if signUp.username == request.form['username'] and signUp.password == request.form['password']:
+    if Sign_up.username == request.form['username'] and Sign_up.password == request.form['password']:
         return render_template('login.html')
     
 
