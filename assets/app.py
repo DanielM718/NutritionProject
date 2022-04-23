@@ -1,7 +1,6 @@
 #test to make sure Joseph N has connected to repository
-from flask import Flask
-from flask import render_template
-from flask import request
+from flask import Flask, render_template, app
+
 
 
 app = Flask(__name__)
@@ -11,15 +10,15 @@ def start():
 
 @app.route('/about')
 def about():
-    return render_template('about.html')
+    return render_template('about.html', title='About - Nutrition Project')
 
 @app.route('/login')
 def login():
-   return render_template('login.html')
+   return render_template('login.html', title='Login - Nutrition Project')
 
 @app.route('/home')
 def home():
-    return render_template('home.html')
+    return render_template('home.html', title='Home - Nutrition Project')
 
 if __name__ == "__main__":
     app.run(debug=True)
