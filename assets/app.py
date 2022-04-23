@@ -1,7 +1,6 @@
-#test to make sure Joseph N has connected to repository
-from flask import Flask
-from flask import render_template
-from flask import request
+
+from flask import Flask, render_template, app
+
 
 
 app = Flask(__name__)
@@ -23,5 +22,3 @@ def home():
 
 if __name__ == "__main__":
     app.run(debug=True)
-
-#still troubleshooting, app wont launch on my end
