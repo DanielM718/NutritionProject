@@ -67,12 +67,12 @@ def sign_up_page():
 
 @app.route('/login',methods=['GET','POST'])
 def login():
-    #  login_username= request.form['login_username']
-    #  login_password= request.form['login_password']
+     login_username= request.form['login_username']
+     login_password= request.form['login_password']
 
-    #  if db.username == login_username and db.password== login_password:
-    #     return render_template('test.html',login_username = login_username, login_password=login_password)
-    #  else:
+     if db.username == login_username and db.password== login_password:
+        return render_template('test.html',login_username = login_username, login_password=login_password)
+     else:
         return render_template('login.html')
     
 
