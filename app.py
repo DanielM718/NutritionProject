@@ -50,30 +50,40 @@ def sign_up_page():
                 'password': passwrd
 
     }
+
+    #user_data = db.collection('').document(user.username).get().to_dict()
     username = db.collection('user_info')#access user_info collection
     user = username.document(user_n).set(user_dict())#adds data passed to firebase DB
-    
+    #user_g = db.collection('user_info').document(user.user_n).get().user_dict()
     #login_username= request.form['']
     #login_password= request.form['']
     
+    #if eml and user_n and passwrd == user_g:
+        #return '<h2> true</h2>'
 
-    #if sign_up.email == eml and sign_up.username == user_n and sign_up.password == passwrd:
+        #if email.request and password.requestform == user_dict()
+        #----------- fix return of dictionary to work with class to allow global access----------
+    
     return render_template('list.html', eml=eml,user_n=user_n, passwrd =passwrd)
-
+        
 
     
-    #return render_template('index.html', username=username, user=user)
+    
 
 
 @app.route('/login',methods=['GET','POST'])
 def login():
-     login_username= request.form['login_username']
-     login_password= request.form['login_password']
+    login_form= request.form['username']
+    login_form_p= request.form['password']
 
-     if db.username == login_username and db.password== login_password:
-        return render_template('test.html',login_username = login_username, login_password=login_password)
-     else:
-        return render_template('login.html')
+    check=db.document('user_info').get()
+     
+    if login_form and login_form_p == check:
+        return True
+    else:
+        return render_template('/login.html')
+         
+   
     
 
 if __name__ == '__main__':
