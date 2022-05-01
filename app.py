@@ -1,6 +1,6 @@
 from email.message import EmailMessage
 from re import template
-from flask import Flask, render_template, request, current_app as app 
+from flask import Flask, render_template, request,redirect, current_app as app 
 from flask_cors import CORS
 import requests
 import sqlite3
@@ -67,22 +67,42 @@ def sign_up_page():
     return render_template('list.html', eml=eml,user_n=user_n, passwrd =passwrd)
         
 
+
+
+@app.route('/personal' , methods=['GET','POST'])
+def personal():
+    username = db.collection('user_info')
+    username_str=str(username)
+    user = username.document('user_info').get()
     
-    
+    var='hello'
+    return render_template('personal.html',var=var, username=username,user=user,username_str=username_str)
 
 
 @app.route('/login',methods=['GET','POST'])
 def login():
-    login_form= request.form['username']
-    login_form_p= request.form['password']
+    login_form = request.form.get('username')
+    login_form_p= request.form.get('password')
+    
 
-    check=db.document('user_info').get()
+    def login_dict():
+        return{
+            "username":login_form,
+            "password":login_form_p
+        }
+    
+    return render_template('login.html', login_form =login_form,login_form_p=login_form_p)  and login_dict()
+    #response=redirect('/login')
+    # check=db.collection('user_info').document('username').get()
+    # print(check)
      
-    if login_form and login_form_p == check:
-        return True
-    else:
-        return render_template('/login.html')
-         
+    # if login_form and login_form_p == check:
+    #     return render_template('login.html', check=check, login_form=login_form, login_form_p=login_form_p)
+    # else:
+
+        
+
+
    
     
 
