@@ -75,14 +75,16 @@ def personal():
     username_str=str(username)
     user = username.document('user_info').get()
     
-    var='hello'
-    return render_template('personal.html',var=var, username=username,user=user,username_str=username_str)
+    
+    return render_template('personal.html', username=username,user=user,username_str=username_str)
 
 
 @app.route('/login',methods=['GET','POST'])
 def login():
+    
     login_form = request.form.get('username')
-    login_form_p= request.form.get('password')
+    login_form_p= request.form.get('password')   
+    
     
 
     def login_dict():
@@ -91,14 +93,15 @@ def login():
             "password":login_form_p
         }
     
-    return render_template('login.html', login_form =login_form,login_form_p=login_form_p)  and login_dict()
-    #response=redirect('/login')
+    return render_template('login.html', login_form =login_form,login_form_p=login_form_p)  
+    # response=redirect('/login')
     # check=db.collection('user_info').document('username').get()
-    # print(check)
+    
      
     # if login_form and login_form_p == check:
     #     return render_template('login.html', check=check, login_form=login_form, login_form_p=login_form_p)
     # else:
+    #     return check
 
         
 
