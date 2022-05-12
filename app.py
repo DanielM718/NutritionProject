@@ -24,7 +24,15 @@ class Sign_up:
         self.password = password
 
         #initilize all parameters
+def info():
+    email=db.document('user_info').get('password')
+    password= db.document('user_info').get('password')
+    username=db.document('user_info').get('username')
+    info_dict={'email':email,
+    'password':password,
+    'username':username,
 
+    }
         
 
 
@@ -39,32 +47,26 @@ def main():
 
 @app.route('/api/sign_up_page', methods=['GET','POST'])
 def sign_up_page():
-    eml = request.form['email']
-    user_n=request.form['username']
-    passwrd=request.form['password']
+    if request.method=='POST':
+        eml = request.form['email']
+        user_n=request.form['username']
+        passwrd=request.form['password']
+    else:
+        pass
     #request info from form
-
     def user_dict():
         return {'email':eml,
                 'username':user_n,
                 'password': passwrd
 
     }
+    
 
     #user_data = db.collection('').document(user.username).get().to_dict()
     username = db.collection('user_info')#access user_info collection
-    user = username.document(user_n).set(user_dict())#adds data passed to firebase DB
-    #user_g = db.collection('user_info').document(user.user_n).get().user_dict()
-    #login_username= request.form['']
-    #login_password= request.form['']
+    user = username.document(user_n).set(user_dict())
     
-    #if eml and user_n and passwrd == user_g:
-        #return '<h2> true</h2>'
-
-        #if email.request and password.requestform == user_dict()
-        #----------- fix return of dictionary to work with class to allow global access----------
-    
-    return render_template('list.html', eml=eml,user_n=user_n, passwrd =passwrd)
+    return render_template('list.html', eml=eml,user_n=user_n, passwrd =passwrd,username=username,user=user)
         
 
 
@@ -81,21 +83,25 @@ def personal():
 
 @app.route('/login',methods=['GET','POST'])
 def login():
-    
-    login_form = request.form.get('username')
-    login_form_p= request.form.get('password')   
-    
-    
+  
+  if request.method == 'POST':
+      login_username = request.form['username']
+      login_password = request.form['password']
+      username = db.collection('user_info')#access user_info collection
+      name=username.document(login_username).set(just_dict())
+  else:
+      pass
+  def just_dict():
+      return{
+          'username':login_username,
+          'password':login_password,
+      }
+  
+  
 
-    def login_dict():
-        return{
-            "username":login_form,
-            "password":login_form_p
-        }
     
-    return render_template('login.html', login_form =login_form,login_form_p=login_form_p)  
-    # response=redirect('/login')
-    # check=db.collection('user_info').document('username').get()
+  return render_template('login.html')   
+    
     
      
     # if login_form and login_form_p == check:
