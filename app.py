@@ -83,12 +83,12 @@ def personal():
 
 @app.route('/login',methods=['GET','POST'])
 def login():
-  
+  login_username = request.form['username']
+  login_password = request.form['password']
   if request.method == 'POST':
       login_username = request.form['username']
       login_password = request.form['password']
-      username = db.collection('user_info')#access user_info collection
-      name=username.document(login_username).set(just_dict())
+      
   else:
       pass
   def just_dict():
@@ -98,9 +98,11 @@ def login():
       }
   
   
+  username = db.collection('user_info')#access user_info collection
+  name=username.document(login_username).set(just_dict())
 
     
-  return render_template('login.html')   
+  return  just_dict()#render_template('personal.html',login_username=login_username,login_password=login_password) just_dict()  
     
     
      
