@@ -111,6 +111,18 @@ def login():
     # else:
     #     return check
 
+
+@app.route('/graph')
+def graph():
+    data=[
+        ('chips',180),
+        ('Chicken taco\'s', 490),
+        ('rice',233)
+    ]
+    x_axis=[row[0]for row in data]
+    y_axis=[row[0]for row in data]
+
+    return render_template('graph.html',data=data, x_axis=x_axis,y_axis=y_axis)
         
 
 
