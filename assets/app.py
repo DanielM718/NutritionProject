@@ -1,5 +1,6 @@
 
-from flask import Flask, render_template, app
+from flask import Flask, render_template, app, cv2, jsonify, request, make_response, abort 
+
 
 
 
@@ -19,6 +20,8 @@ def login():
 @app.route('/home')
 def home():
     return render_template('home.html')
+
+@app.route('')
 
 if __name__ == "__main__":
     app.run(debug=True)
