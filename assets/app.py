@@ -1,6 +1,7 @@
 
-from flask import Flask, render_template, app, 
-import cv2, jsonify, request, make_response, abort 
+from flask import Flask, render_template, app 
+import cv2
+#jsonify, request, make_response, abort 
 camera = cv2.VideoCapture(0)
 
 def gen_frames():
