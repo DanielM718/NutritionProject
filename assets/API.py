@@ -28,14 +28,14 @@ siteURL = "https://api.foodai.org/v4.1/classify"
 data = {
     'image_data': ("banana.png", binaryImage),
     'num_tag': (None, "4"),
-    'api_key': (None, 'a7d8d68cc247de3a93deda11fe437ca2a5a2ab6e')
+    'api_key': (None, 'a1e3760442d8a4125ad5a8f51542537bc0de167d')
 }
 
 response = requests.Request('POST',siteURL,files=data)
 res = response.prepare()
 session = requests.Session()
 result = session.send(res)
-Food = result,text
+Food = result.text
 print(Food)
 
 url = "https://api.nal.usda.gov/fdc/v1/foods/search?api_key=XnRtjuAtuUfz6a43IFDUyLbcwdDJcUhkpRGKbY9N"
