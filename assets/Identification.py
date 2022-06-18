@@ -60,15 +60,26 @@ def classifier(binaryImage):
     foodConversion =  json.loads(responseFoodUnPackaged)
     responseFoods = foodConversion['foods']
 
-    for responseFood in responseFoods:
-        nutrients = responseFood['foodNutrients']
+    i = 0
+    brand = 0
+    h=0
+    Kcal = []
+    Kjoules = []
 
-        for nutrient in nutrients:
-            caloriesKCAL = nutrient['nutrientId'][1008]['value']
-            caloriesKj = nutrient['nutrientId'][1062]['value']
-            calories = caloriesKCAL + caloriesKj
+    while brand < len(responseFoods):
+        nutrients = responseFoods[brand]['foodNutrients']
+        for i in nutrients:
+            if i['nutrientId'] == 1008:
+                Kcal.append(i['value'])
+            elif i['nutrientId'] == 1062:
+                conversion = (i['value'])/(4.184)
+                Kjoules.append(round(conversion))
+        brand+=1
     
-    print(calories)
+    for cal in Kcal:
+        print(cal)
+    for calk in Kjoules:
+        print(calk)
         
 
 
