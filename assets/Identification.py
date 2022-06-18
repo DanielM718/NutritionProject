@@ -64,7 +64,7 @@ def classifier(binaryImage):
     brand = 0
     h=0
     Kcal = []
-    Kjoules = []
+    # Kjoules = []
 
     while brand < len(responseFoods):
         nutrients = responseFoods[brand]['foodNutrients']
@@ -73,13 +73,15 @@ def classifier(binaryImage):
                 Kcal.append(i['value'])
             elif i['nutrientId'] == 1062:
                 conversion = (i['value'])/(4.184)
-                Kjoules.append(round(conversion))
+                Kcal.append(round(conversion))
         brand+=1
-    
+    print(Kcal)
+    print(type(Kcal))
+    print(sum(Kcal))
     for cal in Kcal:
         print(cal)
-    for calk in Kjoules:
-        print(calk)
+    # for calk in Kjoules:
+    #     print(calk)
         
 
 

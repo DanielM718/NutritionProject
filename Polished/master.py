@@ -1,7 +1,7 @@
 from email.message import EmailMessage
 from lib2to3.pytree import convert
 from re import template
-from flask import Flask, render_template, request,redirect, current_app as app 
+from flask import Flask, render_template, request,redirect, Response, jsonify, make_response, current_app as app 
 from flask_cors import CORS
 import requests
 import json
@@ -89,7 +89,7 @@ def classifier(binaryImage):
     brand = 0
     h=0
     Kcal = []
-    Kjoules = []
+    # Kjoules = []
 
     while brand < len(responseFoods):
         nutrients = responseFoods[brand]['foodNutrients']
@@ -98,13 +98,16 @@ def classifier(binaryImage):
                 Kcal.append(i['value'])
             elif i['nutrientId'] == 1062:
                 conversion = (i['value'])/(4.184)
-                Kjoules.append(round(conversion))
-        brand+=1
-    
-    for cal in Kcal:
-        print(cal)
-    for calk in Kjoules:
-        print(calk)
+                Kcal.append(conversion)
+        brand+=1 
+    # for cal in Kcal:
+    #     print(cal)
+
+    Calories = round((sum(Kcal))/(len(Kcal)))
+     
+    # for calk in Kjoules:
+    #     print(calk)
+    return Food, Calories
 
 
 app = Flask(__name__)
@@ -113,8 +116,8 @@ CORS(app, resources=r'/api/*')
 
 @app.route('/')
 def main():
-
-    return render_template('index.html')
+    calories = 0
+    return render_template('vid.html', calories = calories)
 
 @app.route('/api/sign_up_page', methods=['GET','POST'])
 def sign_up_page():
@@ -194,6 +197,22 @@ def graph():
     y_axis=[row[0]for row in data]
 
     return render_template('graph.html',data=data, x_axis=x_axis,y_axis=y_axis)
+
+
+@app.route('/testingRoute', methods=['POST', 'GET'])
+def test():
+    if request.method == 'GET':
+        return render_template('Vid.html')
+    else:
+        print('proccesing frame') 
+        calories = classifier(getFrame())
+        print(calories)
+        return render_template('Vid.html', calories=calories)
+
+@app.route('/video_feed')
+def video_feed():
+    #Video streaming route. Put this in the src attribute of an img tag
+    return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame') 
         
 
 if __name__ == '__main__':
