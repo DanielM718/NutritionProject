@@ -61,19 +61,20 @@ def classifier(binaryImage):
     data = {
         'image_data': ("banana.png", binaryImage),
         'num_tag': (None, "4"),
-        'api_key': (None, '8693e3f221552f444d82345e51349382312c2ff6')
+        'api_key': (None, 'a1e3760442d8a4125ad5a8f51542537bc0de167d')
     }
 
+    #comment untill we can get a key again
 
-    response = requests.Request('POST',siteURL,files=data)
-    res = response.prepare()
-    session = requests.Session()
-    result = session.send(res)
-    raw = result.text
-    convert = json.loads(raw)
-    Food = convert['food_results'][0][0]
-    print(Food)
-    
+    # response = requests.Request('POST',siteURL,files=data)
+    # res = response.prepare()
+    # session = requests.Session()
+    # result = session.send(res)
+    # raw = result.text
+    # convert = json.loads(raw)
+    # Food = convert['food_results'][0][0]
+    # print(Food)
+    Food="Banana"
     payload = json.dumps({
         "query": Food
     })
